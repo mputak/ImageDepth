@@ -5,7 +5,7 @@ import customtkinter as ctk
 import torch
 from diffusers import StableDiffusionDepth2ImgPipeline
 
-# add img parameter
+
 class Generator:
     def __init__(self, prompt, init_image):
         self.pipe = StableDiffusionDepth2ImgPipeline.from_pretrained(
@@ -15,10 +15,6 @@ class Generator:
         self.pipe.enable_attention_slicing() 
         
         self.init_image = init_image
-        # self.filename = filename
-        # self.init_image = Image.open(self.filename)
-        # self.init_image.thumbnail((448, 512))
-
         self.prompt = prompt
         self.n_propmt = "bad, deformed, ugly, bad anotomy"
         self.strength = 0.7
@@ -34,16 +30,19 @@ class App(ctk.CTk):
         self.geometry("600x700")
 
         self.image_label = tk.Label(self, borderwidth=0)
-        self.image_label.place(x=300, y=0, anchor="n")
+        self.image_label.place(relx=0.5, rely=0, anchor="n")
 
         self.entry = ctk.CTkEntry(self, placeholder_text="Type prompt here.", width=200)
 
-        self.browse_button = ctk.CTkButton(self, text="Browse", command=self.browse, border_width=1, width=120)
-        self.browse_button.place(x=300, y=530, anchor="center")
+        self.browse_button = ctk.CTkButton(self, text="Browse", command=self.browse,
+         border_width=1, width=120)
+        self.browse_button.place(relx=0.375, rely=0.77, anchor="center", relwidth= 0.25, relheight=0.05)
 
-        self.generate_button = ctk.CTkButton(self, text="Generate", command=self.generate, border_width=2, width=160, fg_color="purple")
+        self.generate_button = ctk.CTkButton(self, text="Generate", command=self.generate,
+         border_width=1, width=160, fg_color="#800080", hover_color="#4B0082")
 
-        self.save_button = ctk.CTkButton(self, text="Save image!", command=self.save, border_width=1, fg_color="green")
+        self.save_button = ctk.CTkButton(self, text="Save image!", command=self.save,
+         border_width=1, fg_color="green")
 
     
     def rescale_image(self, filename):
@@ -70,18 +69,14 @@ class App(ctk.CTk):
 
     def browse(self):
         self.filename = filedialog.askopenfilename()
-        print(self.filename)
 
-        # Image preview
-        # pil_img = Image.open(self.filename)
-        # pil_img.thumbnail((448, 512))
         self.pil_img = self.rescale_image(self.filename)
         tk_image = ImageTk.PhotoImage(self.pil_img)
         self.image_label.config(image=tk_image)
         self.image_label.image = tk_image
 
-        self.entry.place(x=300, y=560, anchor="center")
-        self.generate_button.place(x=300, y=590, anchor="center")
+        self.entry.place(relx=0.5, rely=0.82, anchor="center", relwidth= 0.5, relheight=0.05)
+        self.generate_button.place(relx=0.625, rely=0.77, anchor="center", relwidth= 0.25, relheight=0.05)
         
     def generate(self):
         prompt = self.entry.get()
@@ -91,13 +86,13 @@ class App(ctk.CTk):
         self.image_label.config(image=self.image)
         self.image_label.image = self.image
 
-        self.save_button.place(x=300, y=620, anchor="center")
+        self.save_button.place(relx=0.5, rely=0.87, anchor="center", relwidth= 0.25, relheight=0.05)
 
     def save(self):
         self.generator.image.save("generated_image.png")
 
         saved_label = ctk.CTkLabel(self, text="Image saved!")
-        saved_label.place(x=300, y=650, anchor="center")
+        saved_label.place(relx=0.5, rely=0.92, anchor="center", relwidth= 0.25, relheight=0.05)
         self.after(3000, saved_label.destroy)
 
 app = App()
