@@ -28,6 +28,7 @@ class App(ctk.CTk):
         ctk.CTk.__init__(self)
         self.title("ImageDepthinator 5000")
         self.geometry("600x700")
+        self.configure(pady=5)
 
         self.image_label = tk.Label(self, borderwidth=0)
         self.image_label.place(relx=0.5, rely=0, anchor="n")
@@ -36,7 +37,7 @@ class App(ctk.CTk):
 
         self.browse_button = ctk.CTkButton(self, text="Browse", command=self.browse,
          border_width=1, width=120)
-        self.browse_button.place(relx=0.375, rely=0.77, anchor="center", relwidth= 0.25, relheight=0.05)
+        self.browse_button.place(relx=0.5, rely=0.77, anchor="center", relwidth= 0.25, relheight=0.05)
 
         self.generate_button = ctk.CTkButton(self, text="Generate", command=self.generate,
          border_width=1, width=160, fg_color="#800080", hover_color="#4B0082")
@@ -75,8 +76,9 @@ class App(ctk.CTk):
         self.image_label.config(image=tk_image)
         self.image_label.image = tk_image
 
-        self.entry.place(relx=0.5, rely=0.82, anchor="center", relwidth= 0.5, relheight=0.05)
-        self.generate_button.place(relx=0.625, rely=0.77, anchor="center", relwidth= 0.25, relheight=0.05)
+        self.browse_button.destroy()
+        self.entry.place(relx=0.5, rely=0.77, anchor="center", relwidth= 0.5, relheight=0.05)
+        self.generate_button.place(relx=0.5, rely=0.82, anchor="center", relwidth= 0.25, relheight=0.05)
         
     def generate(self):
         prompt = self.entry.get()
