@@ -20,12 +20,12 @@ pip install diffusers transformers accelerate scipy safetensors
 
 ## Example
 
-Original image:
+Original image:\
 ![Lenna](./images/Lenna_(test_image).png)
 
 Prompt: **sunglasses, in space**
 
-Output image:
+Output image:\
 ![Cool Lenna](./images/Cool_Lenna_(test_image).png)
 
 
